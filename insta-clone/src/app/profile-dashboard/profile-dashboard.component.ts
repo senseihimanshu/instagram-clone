@@ -18,38 +18,38 @@ import { FileUploadService } from "../services/fileUpload.service";
 })
 export class ProfileDashboardComponent implements OnInit {
 
-  constructor(private sendReq: SendHttpRequestService, 
-  private _router:Router,
-  private domSanitizer:DomSanitizer,
-  private fileUploadService: FileUploadService) { }
+  constructor(private sendReq: SendHttpRequestService,
+    private _router: Router,
+    private domSanitizer: DomSanitizer,
+    private fileUploadService: FileUploadService) { }
 
-  name:string;
-  username:string;
-  followers:number;
-  following:number;
+  name: string;
+  username: string;
+  followers: number;
+  following: number;
   posts: number;
-  bio:string;
+  bio: string;
   loggedinUserId: string;
-  loggedinUserInstaHandle:string;
+  loggedinUserInstaHandle: string;
   usersArray: any;
-  followersArray=[]
-  followingArray=[]
-  editButton : Boolean=false;
-  followButton:Boolean=false;
-  unfollowButton : Boolean=false;
-  currentProfileId : string ;
+  followersArray = []
+  followingArray = []
+  editButton: Boolean = false;
+  followButton: Boolean = false;
+  unfollowButton: Boolean = false;
+  currentProfileId: string;
   image: any;
-  
+
   ngOnInit() {
     this.loggedinUserId = this.sendReq.jsonDecoder(localStorage.getItem("token")).data._id
     this.loggedinUserInstaHandle = this.sendReq.jsonDecoder(localStorage.getItem("token")).data.instaHandle
 
     let current_route = this._router.url.split("/");
-    this.loadUserData(this.currentProfileId,current_route[2]);
+    this.loadUserData(this.currentProfileId, current_route[2]);
   }
 
 
-  loadPosts(){
+  loadPosts() {
     // this.sendReq.
   }
   images: any;
@@ -62,72 +62,72 @@ export class ProfileDashboardComponent implements OnInit {
       this.onSubmit();
     }
   }
-  onSubmit(){
+  onSubmit() {
     const formData = new FormData();
     formData.append('image', this.images);
 
-    
+
     const _id = jsonDecoder().data.instaHandle;
     this.fileUploadService.fileUpload(formData, _id).subscribe((res: any) => {
       alert('Successful');
     });
   }
 
-  loadUserData(id:string=null, instaHandle:string=null) {
+  loadUserData(id: string = null, instaHandle: string = null) {
 
-    if (id != null){
+    if (id != null) {
       this.currentProfileId = id;
     }
 
-    
 
-    this.sendReq.userInfo(id,instaHandle).subscribe(res => {
-      if(res.status == 200){
-        
+
+    this.sendReq.userInfo(id, instaHandle).subscribe(res => {
+      if (res.status == 200) {
+
         this.usersArray = res.body.user;
-        this.image = res.body.bufferedImage ? BufferToImage.bufferToImage(res.body.bufferedImage, this.domSanitizer): null;
+        this.image = res.body.bufferedImage ? BufferToImage.bufferToImage(res.body.bufferedImage, this.domSanitizer) : null;
         this.setUserData();
-        
+
       }
-      else if(res.status == 401){
+      else if (res.status == 401) {
         localStorage.removeItem("token");
         this._router.navigate(['/login']);
       }
     });
   }
 
-  setUserData(){
+  setUserData() {
 
     let current_route = this._router.url.split("/");
-    
+
     this.name = this.usersArray.name;
     this.username = this.usersArray.instaHandle;
     this.followers = this.usersArray.followers;
     this.following = this.usersArray.following;
     this.posts = this.usersArray.postsCount;
     this.bio = this.usersArray.about;
-    
 
-    if (this.loggedinUserInstaHandle == current_route[2]){
-      
+
+    if (this.loggedinUserInstaHandle == current_route[2]) {
+
       this.editButton = true
       this.followButton = false
       this.unfollowButton = false
     }
-    else{
-      this.sendReq.checkFollow(current_route[2],this.loggedinUserId).subscribe(res => {
-      
-        if(res.body.success == true){
+    else {
+      this.sendReq.checkFollow(current_route[2], this.loggedinUserId).subscribe(res => {
+
+        if (res.body.success == true) {
           this.followButton = false
           this.unfollowButton = true
           this.editButton = false
         }
-        else if(res.body.success == false){
+        else if (res.body.success == false) {
           this.followButton = true
           this.unfollowButton = false
           this.editButton = false
         }
-        else if (res.status==401){
+        else if (res.status == 401) {
           localStorage.removeItem("token");
           this._router.navigate(['/login']);
         }
@@ -135,78 +135,78 @@ export class ProfileDashboardComponent implements OnInit {
     }
   }
 
-  getFollowers(){
+  getFollowers() {
     let current_route = this._router.url.split("/");
-    
+
     this.sendReq.getFollowersList(current_route[2]).subscribe(res => {
-        
-        this.followersArray = res.payload.data.allFollowers;
-        
-      if(res.status == 401){
+
+      this.followersArray = res.payload.data.allFollowers;
+
+      if (res.status == 401) {
         localStorage.removeItem("token");
         this._router.navigate(['/login']);
       }
     });
   }
 
-  getFollowing(){
-    
+  getFollowing() {
+
     let current_route = this._router.url.split("/");
     this.sendReq.getFollowingList(current_route[2]).subscribe(res => {
-      
-        this.followingArray = res.payload.data.allFollowing;
-        
-      if(res.status == 401){
+
+      this.followingArray = res.payload.data.allFollowing;
+
+      if (res.status == 401) {
         localStorage.removeItem("token");
         this._router.navigate(['/login']);
       }
     });
   }
 
-  followObj(){
+  followObj() {
     let current_route = this._router.url.split("/");
     this.follow(current_route[2])
   }
 
-  follow(ownerId){   
+  follow(ownerId) {
     let current_route = this._router.url.split("/");
     let loggedinUserId = this.sendReq.jsonDecoder(localStorage.getItem("token")).data._id
     this.sendReq.followUser(ownerId, loggedinUserId).subscribe(res => {
-      if(res.status == 200 ){
-        if (current_route[2] == ownerId){
+      if (res.status == 200) {
+        if (current_route[2] == ownerId) {
           this.loadUserData(null, ownerId)
         }
-        else{
+        else {
           this.getFollowers();
           this.getFollowing()
-          
+
         }
-        
+
       }
-      else if(res.status == 401){
+      else if (res.status == 401) {
         localStorage.removeItem("token");
         this._router.navigate(['/login']);
-        
+
       }
     });
   }
 
-  unfollowObj(){
+  unfollowObj() {
     let current_route = this._router.url.split("/");
     this.unfollow(current_route[2])
   }
 
-  unfollow(ownerId){
+  unfollow(ownerId) {
     let current_route = this._router.url.split("/");
     let loggedinUserId = this.sendReq.jsonDecoder(localStorage.getItem("token")).data._id
     this.sendReq.unfollowUser(ownerId, loggedinUserId).subscribe(res => {
-      if(res.status == 200){
-        
-        if (current_route[2] == ownerId){
+      if (res.status == 200) {
+
+        if (current_route[2] == ownerId) {
           this.loadUserData(null, ownerId)
-          
+
         }
-        else{
+        else {
           this.getFollowers();
           this.getFollowing()
           this.loadUserData(null, current_route[2])
@@ -214,16 +214,16 @@ export class ProfileDashboardComponent implements OnInit {
         return true
 
       }
-      else if(res.status == 401){
-        
+      else if (res.status == 401) {
+
         localStorage.removeItem("token");
         this._router.navigate(['/login']);
         return false
-      }   
+      }
     });
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem("token");
     this._router.navigate(['/login']);
   }

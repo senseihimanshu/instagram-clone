@@ -95,6 +95,7 @@ class user {
   }
 
   async show(req, res) {
+    console.log(req.headers.token);
     if (jwtHandler.tokenVerifier(req.headers.token)) {
       var obj = req.query;
       if (obj.id != "null") {
@@ -104,7 +105,7 @@ class user {
       }
 
       if (userObj[0] != null) {
-        res.status(200).send({ user: userObj['0'], bufferedImage: userObj[0].image? fs.readFileSync(userObj[0].image): null });
+        res.status(200).send({ user: userObj['0'], bufferedImage: userObj[0].image ? fs.readFileSync(userObj[0].image) : null });
       } else {
         res.status(404).send({
           message: "not a user"
@@ -128,48 +129,48 @@ class user {
   async changePassword(req, res) {
     const passwordObj = req.body
     const token = jwtHandler.tokenVerifier(req.headers.token);
-    const checkPassword = await model.user.checkPassword({_id : req.params.id}, passwordObj.oldPassword)
+    const checkPassword = await model.user.checkPassword({ _id: req.params.id }, passwordObj.oldPassword)
 
     if (token) {
-      
-      try{
-        if (passwordObj.newPassword != passwordObj.confirmNewPassword){
+
+      try {
+        if (passwordObj.newPassword != passwordObj.confirmNewPassword) {
           res.status(400).send({
-            success : false,
+            success: false,
             message: "Please make sure both passwords match."
           })
         }
 
-        else if (passwordObj.oldPassword == passwordObj.newPassword){
+        else if (passwordObj.oldPassword == passwordObj.newPassword) {
           res.status(400).send({
-            success : false,
+            success: false,
             message: "Create a new password that isn't your current password."
           })
         }
 
-        else if(checkPassword==false){
+        else if (checkPassword == false) {
           res.status(400).send({
-            success : false,
+            success: false,
             message: "Your old password was entered incorrectly. Please enter it again."
           })
         }
 
-        else{
+        else {
           const salt = await bcrypt.genSalt(10);
           const hashedPassword = await bcrypt.hash(passwordObj.newPassword, salt);
-          let obj = await model.user.update({_id:req.params.id}, {password: hashedPassword})
+          let obj = await model.user.update({ _id: req.params.id }, { password: hashedPassword })
           res.status(200).send({
-            success : true,
+            success: true,
             message: "Password Changed Successfully."
           })
         }
       }
       catch{
-        res.status(401).send({message:"Some error occured"})
+        res.status(401).send({ message: "Some error occured" })
       }
-      
-    } 
-    
+
+    }
+
     else {
       res.status(401).send("Unauthorized");
     }

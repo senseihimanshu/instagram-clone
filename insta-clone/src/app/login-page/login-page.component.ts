@@ -27,7 +27,7 @@ export class LoginPageComponent {
     loginFunction(userObj) {
         this.sendReq.logMeIn(userObj).subscribe(res => {
             if (res.status == 200) {
-                localStorage.setItem("token", `Bearer ${res.body.token}`);
+                localStorage.setItem("token", `${res.body.token}`);
                 this._router.navigate(["/feed"]);
             } else if (res.status == 401) {
                 this.warningText = res.error.message;

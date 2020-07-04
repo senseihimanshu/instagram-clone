@@ -96,6 +96,7 @@ export class SendHttpRequestService {
   }
 
   userInfo(id: string, instaHandle: string): Observable<any> {
+    console.log(this.header_token, 'this.header_token');
     return this.http
       .get(
         "http://localhost:3000/user/?" +
