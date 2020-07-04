@@ -6,11 +6,13 @@
       </div>
       <div class="row input-row">
         <form #form="ngForm" (ngSubmit)="loginFunction(form.value)">
-          <input type="text" name="instaHandle" required #instaHandle="ngModel" ngModel  placeholder="Phone number, username, or email"  class="input-1" />
-        
-          <input type="password" name="password" required #password="ngModel" ngModel placeholder="Password"  class="input-2" />
-        
-          <button type="submit" [disabled]="form.invalid" class="btn login-btn">Log In</button> 
+          <input type="text" name="instaHandle" required #instaHandle="ngModel" ngModel
+            placeholder="Phone number, username, or email" class="input-1" />
+
+          <input type="password" name="password" required #password="ngModel" ngModel placeholder="Password"
+            class="input-2" />
+
+          <button type="submit" [disabled]="form.invalid" class="btn login-btn">Log In</button>
         </form>
       </div>
 
@@ -21,7 +23,7 @@
         <button class="btn login-with-fb"><img src="../../assets/images/fb.png"> Log in with Facebook</button>
       </div>
       <div>
-        <small  class="warning" [style.display]="warning ? 'block' : 'none'">
+        <small class="warning" [style.display]="warning ? 'block' : 'none'">
           {{warningText}}
         </small>
       </div>
@@ -29,12 +31,12 @@
         <a href="#">Forgot Password?</a>
       </div>
     </div>
-  </div> 
+  </div>
   <div class="row below-login-row">
     <div class="col-lg-3 offset-lg-4">
       <div class="row">
         <span>Don't have an account? <a routerLink="/signup">Sign up</a></span>
-      </div>  
+      </div>
     </div>
   </div>
   <div class="row get-app-row">
@@ -45,15 +47,18 @@
       <div class="row app-img">
         <div class="col-lg-4 offset-lg-1">
           <a href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&amp;ct=igweb.loginPage.badge&amp;mt=8">
-            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png" >
+            <img
+              src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png">
           </a>
         </div>
         <div class="col-lg-4 offset-lg-1">
-          <a href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26utm_medium%3Dbadge">
-            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/f06b908907d5.png">
+          <a
+            href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26utm_medium%3Dbadge">
+            <img
+              src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/f06b908907d5.png">
           </a>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 </div>
@@ -100,4 +105,3 @@
 
   </div>  
 </div>  App-img end-->
- 

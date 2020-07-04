@@ -1,55 +1,66 @@
 <app-homenav></app-homenav>
 
 <div class="container-fluid" style="background-color: #FAFAFA;">
-  
-  
-    <app-create-post (reloadPost)="reloadPosts()"  [bufferedImage]="bufferedImage"></app-create-post>
 
-    <app-user-info></app-user-info>
-    
-    <div *ngFor = "let item of feed; let i = index" class="col-lg-5 offset-lg-2" style="background-color: white; border:1px solid #DBDBDB; margin-top: 2rem; margin-bottom: 2rem; border-radius: 5px;">
-      <div class="row user-details-row" style="padding: 0.5rem 0;">
-        <div class="col-lg-1">
-          <img [src]="postUserImages[i]? postUserImages[i] : 'https://p7.hiclipart.com/preview/802/786/502/google-account-google-search-customer-service-google-logo-login-button-thumbnail.jpg'" class="rounded-circle profile-img'" style="width: 2.5rem; height: 2.5rem;">
-        </div>
-        <div class="col-lg-10">
-          <div><a class="userid" [routerLink]="['../profile', item.post.user.instaHandle]"><b>{{item.post.user.instaHandle}}</b></a></div>
-        </div>
-        <div class="col-lg-1">
-          <span [routerLink]="['/post/'+item.post._id]" style="cursor: pointer;"><b><h3 >...</h3></b></span>
-        </div>
+
+  <app-create-post (reloadPost)="reloadPosts()" [bufferedImage]="bufferedImage">
+  </app-create-post>
+
+
+  <div *ngFor="let item of feed; let i = index" class="col-lg-5 offset-lg-2"
+    style="background-color: white; border:1px solid #DBDBDB; margin-top: 2rem; margin-bottom: 2rem; border-radius: 5px;">
+    <div class="row user-details-row" style="padding: 0.5rem 0;">
+      <div class="col-lg-1">
+        <img
+          [src]="postUserImages[i]? postUserImages[i] : 'https://p7.hiclipart.com/preview/802/786/502/google-account-google-search-customer-service-google-logo-login-button-thumbnail.jpg'"
+          class="rounded-circle profile-img'" style="width: 2.5rem; height: 2.5rem;">
       </div>
-      <div class="row user-image-row" *ngIf="postImages[i]">
-        <img [src]="postImages[i]" class="img-responsive" style="width: 100%; ">
+      <div class="col-lg-10">
+        <div><a class="userid"
+            [routerLink]="['../profile', item.post.user.instaHandle]"><b>{{item.post.user.instaHandle}}</b></a></div>
       </div>
-      <div class="row like-comment-row">
-        <a (click)="toggleLike(item.post._id,'inc')" *ngIf="!item.relation"><i class="fa fa-heart-o" aria-hidden="true" ></i></a>
-        <a (click)="toggleLike(item.post._id,'dec')" *ngIf="item.relation"><i class="fa fa-heart" aria-hidden="true" ></i></a>
-        <a [routerLink]="['/post/'+item.post._id]"><img src="../../assets/images/comment1.png"></a>
-      </div>
-      <div class="row" style="padding-left: 0.75rem" >
-        <span *ngIf="item.post.count.likeCount > 0" >Liked by<a class="userid" [routerLink]="['../profile', item.post.likesArray[0].likedBy.instaHandle]"><b>{{item.post.likesArray[0].likedBy.instaHandle}}</b></a><a (click)="openDialog(item.post._id)" *ngIf="item.post.count.likeCount-1 > 0" >and {{item.post.count.likeCount-1}} others</a></span>
-      </div>
-      <div class="row">
-        <span><a class="userid" [routerLink]="['../profile', item.post.user.instaHandle]"><b>{{item.post.user.instaHandle}}</b></a></span><span>{{item.post.caption}}</span>
-      </div>
-      <div *ngIf="item.post.count.commentCount>0">
-        <span class="viewComments" *ngIf="item.post.count.commentCount>2"><a class="viewComments" [routerLink]="['/post/'+item.post._id]">View all {{item.post.count.commentCount}} comments</a></span>
-        <span class="row" *ngIf="item.post.commentsArray[0]"><a class="userid" [routerLink]="['../profile', item.post.commentsArray[0].commentedBy.instaHandle]"><b>{{item.post.commentsArray[0].commentedBy.instaHandle}}</b></a><span>{{item.post.commentsArray[0].content}}</span></span>
-        <span class="row" *ngIf="item.post.commentsArray[1]"><a class="userid" [routerLink]="['../profile', item.post.commentsArray[1].commentedBy.instaHandle]"><b>{{item.post.commentsArray[1].commentedBy.instaHandle}}</b></a><span>{{item.post.commentsArray[1].content}}</span></span>
-        <span style="padding: 0.75rem" class="row row-time">{{ (item.post.createdAt) | dateAgo }}</span>
-      </div>
-      <div class="row add-comment-section">
-        <input type="text" style="height: 4rem;" required ngModel placeholder="  Add a comment..." #commentInput="ngModel">
-        <button type="submit" [disabled]="!commentInput.valid" [ngStyle]="(!commentInput.valid) && {'color': 'rgba(0, 148, 246, 0.432)', 'cursor': 'not-allowed'}" (click)="createComment(commentInput.value, item.post._id)">Post</button>
+      <div class="col-lg-1">
+        <span [routerLink]="['/post/'+item.post._id]" style="cursor: pointer;"><b>
+            <h3>...</h3>
+          </b></span>
       </div>
     </div>
-  
+    <div class="row user-image-row" *ngIf="postImages[i]">
+      <img [src]="postImages[i]" class="img-responsive" style="width: 100%; ">
+    </div>
+    <div class="row like-comment-row">
+      <a (click)="toggleLike(item.post._id,'inc')" *ngIf="!item.relation"><i class="fa fa-heart-o"
+          aria-hidden="true"></i></a>
+      <a (click)="toggleLike(item.post._id,'dec')" *ngIf="item.relation"><i class="fa fa-heart"
+          aria-hidden="true"></i></a>
+      <a [routerLink]="['/post/'+item.post._id]"><img src="../../assets/images/comment1.png"></a>
+    </div>
+    <div class="row" style="padding-left: 0.75rem">
+      <span *ngIf="item.post.count.likeCount > 0">Liked by<a class="userid"
+          [routerLink]="['../profile', item.post.likesArray[0].likedBy.instaHandle]"><b>{{item.post.likesArray[0].likedBy.instaHandle}}</b></a><a
+          (click)="openDialog(item.post._id)" *ngIf="item.post.count.likeCount-1 > 0">and
+          {{item.post.count.likeCount-1}} others</a></span>
+    </div>
+    <div class="row">
+      <span><a class="userid"
+          [routerLink]="['../profile', item.post.user.instaHandle]"><b>{{item.post.user.instaHandle}}</b></a></span><span>{{item.post.caption}}</span>
+    </div>
+    <div *ngIf="item.post.count.commentCount>0">
+      <span class="viewComments" *ngIf="item.post.count.commentCount>2"><a class="viewComments"
+          [routerLink]="['/post/'+item.post._id]">View all {{item.post.count.commentCount}} comments</a></span>
+      <span class="row" *ngIf="item.post.commentsArray[0]"><a class="userid"
+          [routerLink]="['../profile', item.post.commentsArray[0].commentedBy.instaHandle]"><b>{{item.post.commentsArray[0].commentedBy.instaHandle}}</b></a><span>{{item.post.commentsArray[0].content}}</span></span>
+      <span class="row" *ngIf="item.post.commentsArray[1]"><a class="userid"
+          [routerLink]="['../profile', item.post.commentsArray[1].commentedBy.instaHandle]"><b>{{item.post.commentsArray[1].commentedBy.instaHandle}}</b></a><span>{{item.post.commentsArray[1].content}}</span></span>
+      <span style="padding: 0.75rem" class="row row-time">{{ (item.post.createdAt) | dateAgo }}</span>
+    </div>
+    <div class="row add-comment-section">
+      <input type="text" style="height: 4rem;" required ngModel placeholder="  Add a comment..."
+        #commentInput="ngModel">
+      <button type="submit" [disabled]="!commentInput.valid"
+        [ngStyle]="(!commentInput.valid) && {'color': 'rgba(0, 148, 246, 0.432)', 'cursor': 'not-allowed'}"
+        (click)="createComment(commentInput.value, item.post._id)">Post</button>
+    </div>
+  </div>
+
 </div>
-
-
-
-
-
-
-

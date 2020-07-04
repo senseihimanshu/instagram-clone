@@ -10,18 +10,20 @@ import { AppComponent } from './app.component';
 import { ProfileDashboardComponent } from './profile-dashboard/profile-dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent }      from './login/login.component';
-import { SignupComponent }  from './signup/signup.component';
-import {ChangePasswordComponent} from './change-password/change-password.component'
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { ChangePasswordComponent } from './change-password/change-password.component'
 import { EditProfileDetailsComponent } from './edit-profile-details/edit-profile-details.component';
-import {ViewPostComponent} from './view-post/view-post.component'
+import { ViewPostComponent } from './view-post/view-post.component'
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
-  { path: "login", component: LoginComponent },
+  { path: "login", component: LoginPageComponent },
   { path: "signup", component: SignupComponent },
-  { path: "feed", component: FeedComponent, canActivate: [AuthGuard] ,
+  {
+    path: "feed", component: FeedComponent, canActivate: [AuthGuard],
 
     // children:[
     //   {
@@ -31,7 +33,7 @@ const routes: Routes = [
     //   }
     // ]
   },
-  
+
   {
     path: "profile/:id",
     component: ProfileDashboardComponent,
@@ -47,7 +49,7 @@ const routes: Routes = [
     component: SuggestionForUComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'post', component: AddFeedComponent},
+  { path: 'post', component: AddFeedComponent },
   {
     path: "accounts/edit",
     component: EditProfileComponent,
@@ -70,15 +72,16 @@ const routes: Routes = [
       }
     ]
   },
-  {path:"post/:id", component:ViewPostComponent,
-  
-  // children:[
-  //   {
-  //     path: "likes",
-  //     component: ModalComponent,
-  //     canActivate: [AuthGuard]
-  //   }
-  // ]
+  {
+    path: "post/:id", component: ViewPostComponent,
+
+    // children:[
+    //   {
+    //     path: "likes",
+    //     component: ModalComponent,
+    //     canActivate: [AuthGuard]
+    //   }
+    // ]
 
   }
 ];
@@ -87,4 +90,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,0 +1,71 @@
+<div class="app-login-page">
+    <div class="wrapper">
+        <div class="header">
+            <div class="top">
+                <div class="logo">
+                    <img src="assets/images/instagram.png" alt="instagram" style="width: 175px;">
+                </div>
+                <form class="form" #form="ngForm" (ngSubmit)="loginFunction(form.value)">
+                    <div class="input_field">
+                        <input name="instaHandle" type="text" placeholder="Phone number, username, or email"
+                            class="input" ngModel>
+                    </div>
+                    <div class="input_field">
+                        <input name="password" type="password" placeholder="Password" class="input" ngModel>
+                    </div>
+                    <button class="btn" [disabled]="form.invalid" style="cursor: pointer;"><a>Log In</a></button>
+                </form>
+                <div class="or">
+                    <div class="line"></div>
+                    <p style="margin-bottom: 0; font-weight: 600;">OR</p>
+                    <div class="line"></div>
+                </div>
+                <div class="dif">
+                    <div class="fb">
+                        <img src="assets/images/facebook.png" alt="facebook">
+                        <p>Log in with Facebook</p>
+                    </div>
+                    <div>
+                        <small class="warning" [style.display]="warning ? 'block' : 'none'">
+                            {{warningText}}
+                        </small>
+                    </div>
+                    <div class="forgot">
+                        <a style="font-weight: 400;">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+            <div class="signup">
+                <p>Don't have an account? <a style="cursor: pointer; text-decoration: none;" routerLink="/signup">Sign
+                        up</a></p>
+            </div>
+            <div class="apps">
+                <p>Get the app.</p>
+                <div class="icons">
+                    <a><img src="assets/images/appstore.png" alt="appstore"></a>
+                    <a><img src="assets/images/googleplay.png" alt="googleplay"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="links">
+                <ul>
+                    <li><a>ABOUT US</a></li>
+                    <li><a>SUPPORT</a></li>
+                    <li><a>PRESS</a></li>
+                    <li><a>API</a></li>
+                    <li><a>JOBS</a></li>
+                    <li><a>PRIVACY</a></li>
+                    <li><a>TERMS</a></li>
+                    <li><a>DIRECTORY</a></li>
+                    <li><a>PROFILES</a></li>
+                    <li><a>HASHTAGS</a></li>
+                    <li><a>LANGUAGE</a></li>
+                </ul>
+            </div>
+            <div class="copyright" style="font-weight: 500;">
+                © 2020 INSTAGRAM FROM FACEBOOK
+            </div>
+        </div>
+    </div>
+</div>

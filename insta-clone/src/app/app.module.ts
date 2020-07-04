@@ -25,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from './modal/modal.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    ProfileDashboardComponent,   
+    ProfileDashboardComponent,
     ImageGalleryComponent,
     FeedComponent,
     HomenavComponent,
@@ -47,7 +48,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     AddFeedComponent,
     ModalComponent,
     DateAgoPipe,
-    UserInfoComponent
+    UserInfoComponent,
+    LoginPageComponent
   ],
   imports: [
     Ng2SearchPipeModule,

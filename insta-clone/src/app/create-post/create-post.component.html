@@ -1,18 +1,24 @@
-<div class="row container">
-  <form class="post-create offset-lg-3" #form="ngForm" (ngSubmit)="createPostHandler(form.value)">
+<div>
+  <form class="post-create col-lg-5 offset-lg-2" #form="ngForm" (ngSubmit)="createPostHandler(form.value)">
     <div class="post-create__primary">
-      <img class="post-create__primary--user_img" [src]="bufferedImage? bufferedImage : 'https://p7.hiclipart.com/preview/802/786/502/google-account-google-search-customer-service-google-logo-login-button-thumbnail.jpg'" class="rounded-circle profile-img'" alt="pro-img" style="margin-top:0.6rem; width: 2.5rem; height: 2.5rem;">
+      <img class="post-create__primary--user_img"
+        [src]="bufferedImage? bufferedImage : 'https://p7.hiclipart.com/preview/802/786/502/google-account-google-search-customer-service-google-logo-login-button-thumbnail.jpg'"
+        class="rounded-circle profile-img'" alt="pro-img" style="margin-top:0.6rem; width: 2.5rem; height: 2.5rem;">
       <p class="post-create__primary--alert" *ngIf="!form.valid && form.submitted">Add image before post</p>
       <label for="caption" class="post-create__primary--post_area" [innerHtml]="caption">
       </label>
-      <textarea id="caption" name="caption" placeholder="Show to the world!" ngModel (ngModelChange)="styleCaption($event)"></textarea>
+      <textarea id="caption" name="caption" placeholder="Show to the world!" ngModel
+        (ngModelChange)="styleCaption($event)"></textarea>
     </div>
     <div class="post-create__secondary">
       <label class="custom-file-input-label" for="file-input">
-        <a class="post-create--image_upload"><i class="fa fa-image fa-2x"></i></a>
+        <a class="post-create--image_upload"><i [class]="imageFile? 'fa fa-check fa-2x' : 'fa fa-image fa-2x'"></i></a>
       </label>
-      <input id="file-input" required name="imageFile" type="file" accept="image/*" class="custom-file-input" ngModel (change)="selectImage($event)" />
-      <button type="submit" [disabled]="!form.valid" [ngStyle]="(!form.valid) && {'background-color': 'rgba(0, 148, 246, 0.432)', 'cursor': 'not-allowed'}" class="post-create--btn_post">Post</button>
+      <input id="file-input" required name="imageFile" type="file" accept="image/*" class="custom-file-input" ngModel
+        (change)="selectImage($event)" />
+      <button type="submit" [disabled]="!form.valid"
+        [ngStyle]="(!form.valid) && {'background-color': 'rgba(0, 148, 246, 0.432)', 'cursor': 'not-allowed'}"
+        class="post-create--btn_post">Post</button>
     </div>
   </form>
   <div class="preview" [ngStyle]="{'background-image': 'url('+preview+')'}"></div>

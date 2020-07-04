@@ -10,7 +10,7 @@ import { jsonDecoder } from '../utils/jsonDecoder';
 import { BufferToImage } from '../utils/bufferToImage';
 import { DomSanitizer } from '@angular/platform-browser';
 
-const URL = "http://localhost:8080/api/upload";
+const URL = "http://localhost:3000/api/upload";
 
 @Component({
   selector: "app-edit-profile-details",
@@ -24,7 +24,7 @@ export class EditProfileDetailsComponent implements OnInit {
     private _router: Router,
     private fileUploadService: FileUploadService,
     private el: ElementRef
-  ) {}
+  ) { }
 
   @ViewChild("uname", { static: false }) uname: ElementRef;
   @ViewChild("uinstaHandle", { static: false }) uinstaHandle: ElementRef;
@@ -102,7 +102,7 @@ export class EditProfileDetailsComponent implements OnInit {
     this.sendReq.userInfo(id, null).subscribe(res => {
       if (res.status == 200) {
         this.usersData = res.body.user;
-        this.image = res.body.bufferedImage ? BufferToImage.bufferToImage(res.body.bufferedImage, this.domSanitizer): null;
+        this.image = res.body.bufferedImage ? BufferToImage.bufferToImage(res.body.bufferedImage, this.domSanitizer) : null;
         this.setUserData();
       } else if (res.status == 401) {
         localStorage.removeItem("token");
@@ -130,7 +130,7 @@ export class EditProfileDetailsComponent implements OnInit {
 
     reader.addEventListener(
       "load",
-      function() {
+      function () {
         preview.src = String(reader.result);
       },
       false
@@ -158,16 +158,16 @@ export class EditProfileDetailsComponent implements OnInit {
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     const formData = new FormData();
     formData.append('image', this.images);
 
-    
+
     const _id = jsonDecoder().data.instaHandle;
     this.fileUploadService.fileUpload(formData, _id).subscribe((res: any) => {
       alert('Successful');
     });
   }
 
-  
+
 }

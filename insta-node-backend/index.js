@@ -1,18 +1,12 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-require("./database-config/config");
-var cors = require("cors");
 const app = express();
-
-app.use(cors({ origin: "*" }));
-
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
+const cors = require("cors");
+require('./database-config/config');
+app.use(cors());
+app.use(express.json());
 require("./routes/route.js")(app);
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`-----------------Listening on port ${port}-----------------`);
 });

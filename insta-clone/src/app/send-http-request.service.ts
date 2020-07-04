@@ -14,7 +14,7 @@ import { Token } from "@angular/compiler/src/ml_parser/lexer";
   providedIn: "root"
 })
 export class SendHttpRequestService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private log(message: string) {
   }
@@ -25,7 +25,7 @@ export class SendHttpRequestService {
     var jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map(function(c) {
+        .map(function (c) {
           return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
         })
         .join("")
@@ -40,7 +40,7 @@ export class SendHttpRequestService {
 
   signMeUp(obj): Observable<any> {
     return this.http
-      .post("http://localhost:8080/signup", obj, { observe: "response" })
+      .post("http://localhost:3000/signup", obj, { observe: "response" })
       .pipe(
         tap(_ => this.log("Signed Up")),
         catchError(this.handleError<any>("Some Error Occurred"))
@@ -49,7 +49,7 @@ export class SendHttpRequestService {
 
   logMeIn(obj): Observable<any> {
     return this.http
-      .post("http://localhost:8080/login", obj, {
+      .post("http://localhost:3000/login", obj, {
         observe: "response",
         responseType: "json"
       })
@@ -61,7 +61,7 @@ export class SendHttpRequestService {
 
   checkIfDuplicate(obj): Observable<any> {
     return this.http
-      .put("http://localhost:8080/checkIfDuplicate", obj, {
+      .put("http://localhost:3000/checkIfDuplicate", obj, {
         observe: "response",
         responseType: "json"
       })
@@ -73,7 +73,7 @@ export class SendHttpRequestService {
 
   updateData(object: any, id: string): Observable<any> {
     return this.http
-      .put(`http://localhost:8080/user/${id}`, object, {
+      .put(`http://localhost:3000/user/${id}`, object, {
         observe: "response",
         headers: this.header_token
       })
@@ -85,7 +85,7 @@ export class SendHttpRequestService {
 
   ChangePassword(object: any, id: string): Observable<any> {
     return this.http
-      .patch(`http://localhost:8080/changePassword/${id}`, object, {
+      .patch(`http://localhost:3000/changePassword/${id}`, object, {
         observe: "response",
         headers: this.header_token
       })
@@ -98,11 +98,11 @@ export class SendHttpRequestService {
   userInfo(id: string, instaHandle: string): Observable<any> {
     return this.http
       .get(
-        "http://localhost:8080/user/?" +
-          "id=" +
-          id +
-          "&instaHandle=" +
-          instaHandle,
+        "http://localhost:3000/user/?" +
+        "id=" +
+        id +
+        "&instaHandle=" +
+        instaHandle,
         { headers: this.header_token, observe: "response" }
       )
       .pipe(
@@ -112,26 +112,26 @@ export class SendHttpRequestService {
   }
 
   getFollowersList(id: string): Observable<any> {
-    return this.http.get(`http://localhost:8080/followers/${id}`, {
+    return this.http.get(`http://localhost:3000/followers/${id}`, {
       headers: this.header_token
     });
   }
 
   getFollowingList(id: string): Observable<any> {
-    return this.http.get(`http://localhost:8080/following/${id}`, {
+    return this.http.get(`http://localhost:3000/following/${id}`, {
       headers: this.header_token
     });
   }
 
   likePost(obj): Observable<any> {
-    return this.http.put("http://localhost:8080/like", obj).pipe(
+    return this.http.put("http://localhost:3000/like", obj).pipe(
       tap(_ => this.log("Liked Picture")),
       catchError(this.handleError<any>("error in liking post"))
     );
   }
 
   commentPost(obj): Observable<any> {
-    return this.http.post("http://localhost:8080/comment", obj).pipe(
+    return this.http.post("http://localhost:3000/comment", obj).pipe(
       tap(_ => this.log("Commented")),
       catchError(this.handleError<any>("error in commenting on post"))
     );
@@ -142,7 +142,7 @@ export class SendHttpRequestService {
       .set("ownerId", ownerId)
       .set("followerId", followerId);
     return this.http.put(
-      "http://localhost:8080/follow",
+      "http://localhost:3000/follow",
       {},
       { headers: this.header_token, observe: "response", params: queryParams }
     );
@@ -153,7 +153,7 @@ export class SendHttpRequestService {
       .set("ownerId", ownerId)
       .set("unfollowerId", unfollowerId);
     return this.http.put(
-      "http://localhost:8080/unfollow",
+      "http://localhost:3000/unfollow",
       {},
       { headers: this.header_token, observe: "response", params: queryParams }
     );
@@ -165,7 +165,7 @@ export class SendHttpRequestService {
       return of([]);
     } //(`${this.heroesUrl}/?name=${term}`)
     return this.http
-      .get(`http://localhost:8080/users?instaHandle=${term}`, {
+      .get(`http://localhost:3000/users?instaHandle=${term}`, {
         headers: this.header_token
       })
       .pipe(
@@ -177,11 +177,11 @@ export class SendHttpRequestService {
   checkFollow(ownerId: string, followerId: string): Observable<any> {
     return this.http
       .get(
-        "http://localhost:8080/followRelation/?" +
-          "ownerId=" +
-          ownerId +
-          "&followerId=" +
-          followerId,
+        "http://localhost:3000/followRelation/?" +
+        "ownerId=" +
+        ownerId +
+        "&followerId=" +
+        followerId,
         { headers: this.header_token, observe: "response" }
       )
       .pipe(
@@ -191,7 +191,7 @@ export class SendHttpRequestService {
   }
   showSuggestion(): Observable<any> {
     return this.http
-      .get("http://localhost:8080/suggestions", { headers: this.header_token })
+      .get("http://localhost:3000/suggestions", { headers: this.header_token })
       .pipe(
         tap(_ => this.log("Suggestions")),
         catchError(this.handleError<any>("error"))
